@@ -16,6 +16,19 @@ interface WakaTimeResponse {
   }>
 }
 
+export async function OPTIONS() {
+  return NextResponse.json(
+    {},
+    {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    }
+  )
+}
+
 export async function GET() {
   try {
     const apiKey = process.env.WAKATIME_API_KEY
@@ -23,7 +36,14 @@ export async function GET() {
     if (!apiKey) {
       return NextResponse.json(
         { error: 'API key is not configured' }, 
-        { status: 500 }
+        { 
+          status: 500,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          }
+        }
       )
     }
 
@@ -53,6 +73,9 @@ export async function GET() {
 
     return NextResponse.json(formattedData, {
       headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200'
       }
     })
