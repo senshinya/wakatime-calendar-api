@@ -67,7 +67,7 @@ export async function GET() {
 
     const formattedData = response.data.data.map(day => ({
       date: day.range.date,
-      count: Math.ceil(day.grand_total.total_seconds / 3600) // 使用 Math.ceil 向上取整
+      count: Math.round(day.grand_total.total_seconds / 3600) // 使用 Math.round 四舍五入
     }))
     .filter(day => day.count > 0)
 
